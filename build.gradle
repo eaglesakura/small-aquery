@@ -96,12 +96,7 @@ uploadArchives {
     }
 }
 
-task uploadJavadoc(type : Copy) {
-  from file("build/docs/javadoc/");
-  into new File("${System.env.MAVEN_LOCAL_REPO}/doc/${ARTIFACT_NAME}/");
-}
-
-task uploadJavadoc2 << {
+task uploadJavadoc << {
     def src = file("build/docs/javadoc/");
     def dst = new File("${System.env.MAVEN_LOCAL_REPO}/doc/${ARTIFACT_NAME}/");
     dst.deleteDir();
