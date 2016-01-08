@@ -85,7 +85,7 @@ uploadArchives {
 
 [uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
     pom.project {
-        inceptionYear '2011'
+        inceptionYear '2016'
         packaging 'aar'
         licenses {
             license {
