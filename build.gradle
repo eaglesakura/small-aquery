@@ -1,4 +1,4 @@
-def ARTIFACT_VERSION = "0.26.8"
+def ARTIFACT_VERSION = "0.26.8.1"
 def ARTIFACT_NAME = file(".").absoluteFile.name
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
