@@ -155,7 +155,8 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * Recycle this AQuery object.
      * <p/>
-     * The method is designed to avoid recreating an AQuery object repeatedly, such as when in list adapter getView method.
+     * The method is designed to avoid recreating an AQuery object repeatedly, such as when in list
+     * adapter getView method.
      *
      * @param root The new root of the recycled AQuery.
      * @return self
@@ -197,7 +198,6 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * Points the current operating view to the specified view.
      *
-     * @param view
      * @return self
      */
     public T id(View view) {
@@ -210,7 +210,6 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * Points the current operating view to the specified view with tag.
      *
-     * @param tag
      * @return self
      */
 
@@ -475,7 +474,6 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * Set tag object of a view.
      *
-     * @param tag
      * @return self
      */
     public T tag(Object tag) {
@@ -490,8 +488,6 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * Set tag object of a view.
      *
-     * @param key
-     * @param tag
      * @return self
      */
     public T tag(int key, Object tag) {
@@ -554,7 +550,6 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * Set clickable for a view.
      *
-     * @param clickable
      * @return self
      */
     public T clickable(boolean clickable) {
@@ -1284,10 +1279,7 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
     /**
      * 指定Viewのセットアップを行う
      *
-     * @param clazz
-     * @param callback
-     * @param <ViewType>
-     * @return
+     * @return this
      */
     public <ViewType extends View> T call(Class<ViewType> clazz, SettingCallback<ViewType> callback) {
         ViewType view = getView(clazz);
