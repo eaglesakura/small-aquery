@@ -1,5 +1,6 @@
 def ARTIFACT_VERSION = "0.26.8.1"
 def ARTIFACT_NAME = file(".").absoluteFile.name
+def ARTIFACT_INSTALL_TARGET = new File("${System.env.MAVEN_LOCAL_REPO}")
 if (System.env.CIRCLE_ARTIFACTS != null) {
     ARTIFACT_INSTALL_TARGET = file(System.env.CIRCLE_ARTIFACTS);
 }
