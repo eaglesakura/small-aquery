@@ -25,9 +25,9 @@ deployment:
   dependencies:
     branch: dependencies
     commands:
-      - rm -rf "~/.gradle/"
-      - rm -rf "home/ubuntu/.m2"
-      - rm -rf "home/ubuntu/.ivy2"
-      - rm -rf "home/ubuntu/.gradle"
+      - rm -rf "/home/ubuntu/.gradle/"
+      - rm -rf "/home/ubuntu/.m2"
+      - rm -rf "/home/ubuntu/.ivy2"
+      - rm -rf "/home/ubuntu/.gradle"
       - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/android-sdk-install-circle.sh)"
       - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/android-sdk.sh)"
