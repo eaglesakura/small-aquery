@@ -21,6 +21,7 @@ test:
   override:
     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/build-test.sh)"
 deployment:
+<<<<<<< HEAD
   canary:
     branch: /^v[0-9]\..*$/
     commands:
@@ -29,3 +30,19 @@ deployment:
     branch: develop
     commands:
     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/build-deploy-local.sh)"
+=======
+  deploy:
+    branch: v0.26.8.x
+    commands:
+      - rm -rf "/home/ubuntu/.gradle/"
+      - rm -rf "/home/ubuntu/.m2"
+      - rm -rf "/home/ubuntu/.ivy2"
+      - rm -rf "/home/ubuntu/.gradle"
+      - git clone git@github.com:eaglesakura/maven.git
+      - ./script/deploy.sh
+      - ./script/circle-maven-commit.sh
+  develop:
+    branch: develop
+    commands:
+      - ./script/deploy.sh
+>>>>>>> 566694b84dc6ab8c608eb2806510adf0e0f7e2e6
