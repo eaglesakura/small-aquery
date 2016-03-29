@@ -25,9 +25,7 @@ import android.view.View;
 public class AQuery extends AbstractAQuery<AQuery> {
 
     public static final int TAG_URL = 0x40FF0001;
-    public static final int TAG_SCROLL_LISTENER = 0x40FF0002;
     public static final int TAG_LAYOUT = 0x40FF0003;
-    public static final int TAG_NUM = 0x40FF0004;
 
 
     public AQuery(Activity act) {
