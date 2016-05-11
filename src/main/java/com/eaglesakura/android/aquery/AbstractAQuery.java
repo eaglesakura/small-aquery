@@ -1276,15 +1276,40 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
         return (ViewType) getView();
     }
 
+
     /**
      * 指定Viewのセットアップを行う
      *
+     * Optionalに合わせ、ifPresent()を利用する
+     *
      * @return this
      */
-    public <ViewType extends View> T call(Class<ViewType> clazz, SettingCallback<ViewType> callback) {
+    public <ViewType extends View> T ifPresent(Class<ViewType> clazz, SettingCallback<ViewType> callback) {
         ViewType view = getView(clazz);
         if (view != null) {
             callback.run(view);
+        }
+        return self();
+    }
+
+
+    /**
+     * 指定Viewのセットアップを行う
+     *
+     * Optionalに合わせ、ifPresent()を利用する
+     *
+     * @return this
+     */
+    @Deprecated
+    public <ViewType extends View> T call(Class<ViewType> clazz, SettingCallback<ViewType> callback) {
+        try {
+            ViewType view = getView(clazz);
+            if (view != null) {
+                callback.run(view);
+            }
+        } catch (ClassCastException e) {
+            // class castは無視する
+            e.printStackTrace();
         }
         return self();
     }
