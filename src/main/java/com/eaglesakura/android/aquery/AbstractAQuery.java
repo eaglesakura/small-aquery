@@ -1103,6 +1103,11 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
         return context;
     }
 
+    public T childAt(int index) {
+        View view = getView();
+        return id(((ViewGroup) view).getChildAt(index));
+    }
+
     protected void reset() {
     }
 
