@@ -18,11 +18,13 @@
  */
 package com.eaglesakura.android.aquery;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Editable;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -1048,9 +1050,10 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> {
      *
      * @return self
      */
+    @SuppressLint("NewApi")
     public T hardwareAccelerated11() {
 
-        if (act != null) {
+        if (act != null && Build.VERSION.SDK_INT >= 11) {
             act.getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
         }
 
