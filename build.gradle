@@ -5,7 +5,7 @@
  */
 def ARTIFACT_VERSION = "1.1"
 def REPOSITORY_NAME = "maven"
-def BINTRAY_LICENSES = ["MIT"]
+def BINTRAY_LICENSES = ["Apache-2.0"]
 def BINTRAY_LABELS = ["android"]
 def BINTRAY_API_KEY = System.env.BINTRAY_API_KEY
 def BINTRAY_GPG_PASS = System.env.BINTRAY_GPG_PASS
@@ -24,8 +24,8 @@ buildscript {
 }
 
 repositories {
-    maven { url "http://eaglesakura.github.io/maven/" }
     mavenCentral()
+    maven { url "https://dl.bintray.com/eaglesakura/maven/" }
 }
 
 apply plugin: 'com.android.library'
@@ -57,8 +57,8 @@ dependencies {
         androidTestCompile project(":eglibrary:android-devicetest-support")
         testCompile project(":eglibrary:android-unittest-support")
     } else {
-        androidTestCompile "com.eaglesakura:android-devicetest-support:2.0.267"
-        testCompile "com.eaglesakura:android-unittest-support:1.3.205"
+        androidTestCompile "com.eaglesakura:android-devicetest-support:2.1.270"
+        testCompile "com.eaglesakura:android-unittest-support:1.4.206"
     }
 }
 
