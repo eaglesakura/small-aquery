@@ -1,10 +1,14 @@
 /**
  * 0.26.8.0   : release
  * 1.0.x      : 本家とは独立したバージョン採番に変更
+ * 1.1.x      : リリースをbintrayに移行
  */
-def ARTIFACT_VERSION = "1.0"
-def ARTIFACT_NAME = file(".").absoluteFile.name
-def ARTIFACT_INSTALL_TARGET = getArtifactInstallTarget()
+def ARTIFACT_VERSION = "1.1"
+def REPOSITORY_NAME = "maven"
+def BINTRAY_LICENSES = ["MIT"]
+def BINTRAY_LABELS = ["android"]
+def BINTRAY_API_KEY = System.env.BINTRAY_API_KEY
+def BINTRAY_GPG_PASS = System.env.BINTRAY_GPG_PASS
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
@@ -13,6 +17,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
 
@@ -22,6 +27,8 @@ repositories {
 }
 
 apply plugin: 'com.android.library'
+group = "com.eaglesakura"
+version = ARTIFACT_VERSION + getArtifactVersionSuffix()
 
 android {
     compileSdkVersion 25
@@ -52,8 +59,6 @@ dependencies {
         testCompile "com.eaglesakura:android-unittest-support:1.3.205"
     }
 }
-
-apply plugin: 'maven'
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -99,26 +104,6 @@ android.libraryVariants.all { variant ->
     }
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri(ARTIFACT_INSTALL_TARGET))
-            pom.version = ARTIFACT_VERSION + getArtifactVersionSuffix()
-            pom.groupId = "com.eaglesakura"
-            pom.artifactId = ARTIFACT_NAME
-        }
-    }
-}
-
-task uploadJavadoc << {
-    def src = file("build/docs/javadoc/");
-    def dst = new File("${ARTIFACT_INSTALL_TARGET.absolutePath}/doc/${ARTIFACT_NAME}/");
-    dst.deleteDir();
-    dst.mkdirs();
-
-    ["/usr/bin/rsync", "-a", src.absolutePath, dst.absolutePath].execute().text;
-}
-
 /**
  * バージョンを取得する
  * CircleCIの場合、バージョン末尾にビルド番号を付与する
@@ -128,21 +113,40 @@ def getArtifactVersionSuffix() {
         // CircleCIのバージョンが指定されているので、そちらを利用する
         return ".${System.env.CIRCLE_BUILD_NUM}"
     } else {
-        return ".0"
+        return ".snapshot"
     }
 }
 
-/**
- * Mavenの格納先を確定する
- */
-def getArtifactInstallTarget() {
-    if (file("maven").directory) {
-        return file("maven");
-    } else if (System.env.CIRCLE_ARTIFACTS != null) {
-        return file(System.env.CIRCLE_ARTIFACTS);
-    } else if (System.env.MAVEN_LOCAL_REPO != null) {
-        return file(System.env.MAVEN_LOCAL_REPO);
-    } else {
-        return file("ci-release");
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        Publication(MavenPublication) {
+            from components.java
+        }
     }
+}
+
+bintray {
+    user = 'eaglesakura'
+    key = BINTRAY_API_KEY
+    pkg {
+        repo = REPOSITORY_NAME
+        name = file(".").absoluteFile.name
+        licenses = BINTRAY_LICENSES
+        labels = BINTRAY_LABELS
+        issueTrackerUrl = "https://github.com/eaglesakura/${file(".").absoluteFile.name}/issues"
+        vcsUrl = "https://github.com/eaglesakura/${file(".").absoluteFile.name}"
+        version {
+            name = project.version
+            released = new Date()
+            gpg {
+                sign = true
+                passphrase = BINTRAY_GPG_PASS
+            }
+        }
+    }
+    publications = ['Publication']
+    configurations = ['archives']
 }

@@ -15,7 +15,6 @@ dependencies:
     - "/home/ubuntu/android-sdk"
   override:
     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/install-android-sdk-auto.sh)"
-    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/install-android-api24.sh)"
 test:
   override:
     - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/build-test.sh)"
@@ -23,8 +22,8 @@ deployment:
   canary:
     branch: /^v[0-9]\..*$/
     commands:
-    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/build-deploy-maven.sh)"
+      - echo "skip upload"
   develop:
     branch: develop
     commands:
-    - sh -c "$(curl -fsSL https://raw.githubusercontent.com/eaglesakura/build-dependencies/master/circleci/build-deploy-local.sh)"
+      - ./gradlew bintrayUpload
